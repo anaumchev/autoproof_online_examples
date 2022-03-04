@@ -2,7 +2,7 @@
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-10-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-10-0 http://www.eiffel.com/developers/xml/configuration-1-10-0.xsd" name="app" uuid="01C9913F-D92C-436C-A6A5-1E498032FE4C">
 	<target name="app">
 		<root all_classes="true"/>
-		<option warning="false" is_attached_by_default="false" syntax="transitional">
+		<option warning="false" is_obsolete_iteration="false" is_attached_by_default="false" syntax="transitional">
 		</option>
 		<setting name="console_application" value="true"/>
 		<!--library name="base" location="$ISE_LIBRARY\library\base\base-eve.ecf"/-->
