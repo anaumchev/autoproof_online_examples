@@ -1,4 +1,4 @@
-﻿-- Calculating the sum and the maximum of array elements.
+-- Calculating the sum and the maximum of array elements.
 -- (From the VSTTE 2010 verification competition).
 
 class
@@ -10,7 +10,7 @@ feature
 			-- Calculate sum and maximum of array `a'.
 		require
 			a_not_void: a /= Void
-			natural_numbers:∀ ai: 1 |..| a.count ¦ a.sequence[ai] >= 0 
+			natural_numbers: ∀ ai: 1 |..| a.count ¦ a.sequence[ai] >= 0 
 		local
 			i: INTEGER
 			sum, max: INTEGER
