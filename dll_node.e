@@ -51,12 +51,11 @@ feature -- Modification
 			n_exists: n /= Void
 			n_singleton: n.left = n
     		right_wrapped: right.is_wrapped
-			modify (Current, right, n)
 		local
 			r: DLL_NODE
 		do
 			r := right
-			unwrap_all ([Current, r, n])
+			unwrap_all (create {MML_SET [ANY]} & Current & r & n)
 
 			n.set_right (r)
 			n.set_left (Current)
@@ -64,14 +63,15 @@ feature -- Modification
 			r.set_left (n)
 			set_right (n)
 
-			n.set_subjects ([r, Current])
-			n.set_observers ([r, Current])
-			set_subjects ([left, n])
-			set_observers ([left, n])
-			r.set_subjects ([n, r.right])
-			r.set_observers ([n, r.right])
-			wrap_all ([Current, r, n])
+			n.set_subjects (create {MML_SET [ANY]} & r & Current)
+			n.set_observers (create {MML_SET [ANY]} & r & Current)
+			set_subjects (create {MML_SET [ANY]} & left & n)
+			set_observers (create {MML_SET [ANY]} & left & n)
+			r.set_subjects (create {MML_SET [ANY]} & n & r.right)
+			r.set_observers (create {MML_SET [ANY]} & n & r.right)
+			wrap_all (create {MML_SET [ANY]} & Current & r & n)
 		ensure
+			modify (Current, right, n)
 			n_left_set: right = n
 			n_right_set: n.right = old right
 		end
@@ -83,13 +83,12 @@ feature -- Modification
 		require
     		left_wrapped: left.is_wrapped
 			right_wrapped: right.is_wrapped
-			modify (Current, left, right)
 		local
 			l, r: DLL_NODE
 		do
 			l := left
 			r := right
-			unwrap_all ([Current, l, r])
+			unwrap_all (create {MML_SET [ANY]} & Current & l & r)
 
 			set_left (Current)
 			set_right (Current)
@@ -97,14 +96,15 @@ feature -- Modification
 			l.set_right (r)
 			r.set_left (l)
 
-			set_subjects ([Current])
-			set_observers ([Current])
-			l.set_subjects ([l.left, r])
-			l.set_observers ([l.left, r])
-			r.set_subjects ([l, r.right])
-			r.set_observers ([l, r.right])
-			wrap_all ([Current, l, r])
+			set_subjects (create {MML_SET [ANY]} & Current)
+			set_observers (create {MML_SET [ANY]} & Current)
+			l.set_subjects (create {MML_SET [ANY]} & l.left & r)
+			l.set_observers (create {MML_SET [ANY]} & l.left & r)
+			r.set_subjects (create {MML_SET [ANY]} & l & r.right)
+			r.set_observers (create {MML_SET [ANY]} & l & r.right)
+			wrap_all (create {MML_SET [ANY]} & Current & l & r)
 		ensure
+			modify (Current, left, right)
 			singleton: right = Current
 			old_left_wrapped: (old left).is_wrapped
 			old_right_wrapped: (old right).is_wrapped
@@ -118,7 +118,6 @@ feature {DLL_NODE} -- Implementation
 		require
 			open: is_open
 			left_open: left.is_open
-			modify_field ("left", Current)
 		do
 			-- According to the update guard of attribute `left',
 			-- other observers except `Current.left' cannot be invalidated by this update;
@@ -127,6 +126,7 @@ feature {DLL_NODE} -- Implementation
 			-- (see `insert_right' and `remove').
 			left := n
 		ensure
+			modify_field ("left", Current)
 			left = n
 		end
 
@@ -135,7 +135,6 @@ feature {DLL_NODE} -- Implementation
 		require
 			open: is_open
 			right_open: right.is_open
-			modify_field ("right", Current)
 		do
 			-- According to the update guard of attribute `right',
 			-- other observers except `Current.right' cannot be invalidated by this update;
@@ -144,6 +143,7 @@ feature {DLL_NODE} -- Implementation
 			-- (see `insert_right' and `remove').			
 			right := n
 		ensure
+			modify_field ("right", Current)
 			right = n
 		end
 
@@ -168,8 +168,8 @@ feature -- Specification
 invariant
 	left_exists: left /= Void
 	right_exists: right /= Void
-	subjects_structure: subjects = [ left, right ]
-	observers_structure: observers = [ left, right ]
+	subjects_structure: subjects = create {MML_SET [ANY]} & left & right
+	observers_structure: observers = create {MML_SET [ANY]} & left & right
 	-- These two invariant clauses depend on the state of other objects.
 	-- They are only admissible because `left' and `right' are contained in `subjects'
 	-- (try commenting out `subjects_structure' clause to see this).
