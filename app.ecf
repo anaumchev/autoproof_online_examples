@@ -7,7 +7,8 @@
 			<concurrency support="none"/>
 			<void_safety support="none"/>
 		</capability>
-		<library name="base" location="${AP}\library\base\base-scoop-safe.ecf"/>
+		<precompile name="precompile" location="$AP_PRECOMP\base2.ecf"/>
+		<library name="base" location="$AP_LIBRARY\library\base\base.ecf"/>
 		<cluster name="app" location=".\">
 			<file_rule>
 				<exclude>/.svn$</exclude>
