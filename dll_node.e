@@ -50,7 +50,7 @@ feature -- Modification
 		require
 			n_exists: n /= Void
 			n_singleton: n.left = n
-    		right_wrapped: right.is_wrapped
+			right_wrapped: right.is_wrapped
 		local
 			r: DLL_NODE
 		do
@@ -81,7 +81,7 @@ feature -- Modification
 		note
 			explicit: wrapping -- Do not automatically unwrap/wrap `Current'
 		require
-    		left_wrapped: left.is_wrapped
+			left_wrapped: left.is_wrapped
 			right_wrapped: right.is_wrapped
 		local
 			l, r: DLL_NODE
@@ -170,9 +170,9 @@ invariant
 	right_exists: right /= Void
 	subjects_structure: subjects = create {MML_SET [ANY]} & left & right
 	observers_structure: observers = create {MML_SET [ANY]} & left & right
-	-- These two invariant clauses depend on the state of other objects.
-	-- They are only admissible because `left' and `right' are contained in `subjects'
-	-- (try commenting out `subjects_structure' clause to see this).
+		-- These two invariant clauses depend on the state of other objects.
+		-- They are only admissible because `left' and `right' are contained in `subjects'
+		-- (try commenting out `subjects_structure' clause to see this).
 	left_consistent: left.right = Current
 	right_consistent: right.left = Current
 
